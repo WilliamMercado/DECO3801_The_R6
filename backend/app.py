@@ -40,7 +40,7 @@ blip = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-capti
 
 # Initialising sdbackbone
 webui_url = 'https://civil-tahr-stirring.ngrok-free.app'
-bb = StableDiffusionBackBone(webui_url)
+bb = StableDiffusionBackBone()
 
 db.init_app(app)
 
