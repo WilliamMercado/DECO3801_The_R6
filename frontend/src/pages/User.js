@@ -10,7 +10,7 @@ export default function User() {
     const [GeneratedImages, setGeneratedImages] = useState(new Set()); // For generated images
     const navigate = useNavigate();  // Navigating between routes
     const [previousSearchQueries, setPreviousSearchQueries] = useState([]); // Store previous search queries
-    const baseUrl = 'http://127.0.0.1:5000'; // Define the base URL for the backend API requests
+    const baseUrl = ' https://c35d7ca285b3.ngrok.app'; // Define the base URL for the backend API requests
     const [visibleImages] = useState(999); // To control how many images are visible initially
 
     useEffect(() => {
