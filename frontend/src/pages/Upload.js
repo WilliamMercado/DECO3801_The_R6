@@ -33,7 +33,7 @@ export default function Upload() {
     //for ai using
     const [generatedImages, setGeneratedImages] = useState({}); // State to store AI-generated image filenames
     const [savedGeneratedImages, setSavedGeneratedImages] = useState(new Set()); // Set of saved image names
-    const baseUrl = '127.0.0.1:5000';
+    const baseUrl = 'http://127.0.0.1:5000';
     
     useEffect(() => {
         const id = localStorage.getItem('userId');
