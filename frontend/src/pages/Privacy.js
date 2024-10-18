@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/Privacy.css"; 
 
 // About Us page
 export default function Privacy() {
@@ -6,7 +7,6 @@ export default function Privacy() {
         <div>
             <center>
                 <h1>Privacy</h1>
-                <p>This is the About Us page content.</p>
             </center>
 
             <div className="container album py-5 bg-body-tertiary" >
@@ -55,14 +55,9 @@ export default function Privacy() {
                 <h3 className="text-center mb-4">Privacy Policy Complaints and Enquiries</h3>
                 <p>If you have any queries or complaints about our Privacy Policy please contact us at:</p>
                 <ul>
-                    <li>infsmarker@gmail.com</li>
+                    <li>@gmail.com</li>
                 </ul>
             </div>
-
-
-
-
-
         </div>
     );
 }

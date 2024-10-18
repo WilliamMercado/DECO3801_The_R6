@@ -271,10 +271,25 @@ export default function Upload() {
         }
     };
 
+    const getEventPosition = (e) => {
+        let clientX, clientY;
+        if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else if (e.changedTouches && e.changedTouches.length > 0) {
+            clientX = e.changedTouches[0].clientX;
+            clientY = e.changedTouches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        return { x: clientX, y: clientY };
+    };
+
     // Start drawing a rectangle when the user clicks on the canvas
     const startDrawing = (e) => {
         if (!selectedImage) {
-            alert("Please choose image first");
+            alert("Please choose an image first");
             return;
         }
         setIsDrawing(true);
@@ -283,15 +298,14 @@ export default function Upload() {
         const imgScale = Math.min(canvas.width / originalWidth, canvas.height / originalHeight);
         const offsetX = (canvas.width - originalWidth * imgScale) / 2;
         const offsetY = (canvas.height - originalHeight * imgScale) / 2;
-
-        const x = (e.clientX - rectBounds.left - offsetX) / imgScale;
-        const y = (e.clientY - rectBounds.top - offsetY) / imgScale;
-
+    
+        const { x: clientX, y: clientY } = getEventPosition(e);
+        const x = (clientX - rectBounds.left - offsetX) / imgScale;
+        const y = (clientY - rectBounds.top - offsetY) / imgScale;
+    
         if (isPenMode) {
-            //  Start drawing with pen (freehand) 
             setCurrentPenStroke([{ x, y }]);
         } else {
-            // Start drawing a rectangle
             setStartPos({ x, y });
             setCurrentRect({ x, y, width: 0, height: 0 });
         }
@@ -300,27 +314,25 @@ export default function Upload() {
     // Finish drawing a rectangle when the user releases the mouse
     const draw = (e) => {
         if (!isDrawing || !canvasRef.current) return;
-
+    
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-
         const imgScale = Math.min(canvas.width / originalWidth, canvas.height / originalHeight);
         const offsetX = (canvas.width - originalWidth * imgScale) / 2;
         const offsetY = (canvas.height - originalHeight * imgScale) / 2;
-
-        const currentX = (e.clientX - canvas.getBoundingClientRect().left - offsetX) / imgScale;
-        const currentY = (e.clientY - canvas.getBoundingClientRect().top - offsetY) / imgScale;
-        const width = currentX - startPos.x;
-        const height = currentY - startPos.y;
-
+    
+        const { x: clientX, y: clientY } = getEventPosition(e);
+        const currentX = (clientX - canvas.getBoundingClientRect().left - offsetX) / imgScale;
+        const currentY = (clientY - canvas.getBoundingClientRect().top - offsetY) / imgScale;
+    
         if (isPenMode) {
-            //  Add points to the current pen stroke 
-            setCurrentPenStroke(prev => [...prev, { x: currentX, y: currentY }]);
+            setCurrentPenStroke((prev) => [...prev, { x: currentX, y: currentY }]);
         } else {
-            // Draw a rectangle
+            const width = currentX - startPos.x;
+            const height = currentY - startPos.y;
             setCurrentRect({ ...currentRect, width, height });
         }
-
+    
         drawImageOnCanvas(ctx);
     };
 
@@ -556,19 +568,19 @@ export default function Upload() {
                     </div>
                     <br />
                     {showCanvas && (
-                        <div>
-                            <h2>Polish your work with inpainting</h2>
+                        <div className="Canvas">
                             <canvas
                                 id="canvasRef"
                                 ref={canvasRef}
                                 onMouseDown={startDrawing}
                                 onMouseUp={stopDrawing}
                                 onMouseMove={draw}
+                                onTouchStart={startDrawing}
                                 onTouchMove={draw}
                                 onTouchEnd={stopDrawing}
-                                onTouchStart={startDrawing}
-                                width="800"
-                                height="600"
+                                style={{ touchAction: 'none' }} // Prevent scrolling
+                                width={800}  // Set the width attribute
+                                height={600} // Set the height attribute
                             />
                             <canvas
                                 id="drawingCanvasRef"

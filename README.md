@@ -41,6 +41,7 @@ Get a better idea of how our platform works from our explainer video [here](http
   - [Stable Diffusion Backbone (Back-end)](#stable-diffusion-backbone-back-end)
 - [Screenshots and Usage Example](#screenshots-and-usage-example)
 - [References](#references)
+- [Prompts](#prompts)
 
 ## Release History
 
@@ -216,3 +217,15 @@ The product is to be used as a side assisstant for artists to search for artwork
     - [Hugging Face: Stable Diffusion v1.5](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5)
 8. **Stable Diffusion Web UI**:
     - [AUTOMATIC1111 GitHub Repository](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+9. **Button**:
+    - [Animation Bro](https://codepen.io/animationbro/pen/YzXqzLv)
+10. **Icon**:
+    - [FlatIcon](https://www.flaticon.com/)
+
+## Prompts
+1. **Inpainting Canvas**:
+   - Help me create a inpainting canvas.
+2. **Comments in CSS files**:
+   - Help me add comments in these CSS files. 
+3. **Team member Profile**:
+   - Can you turn these profile images into oil painting effect? 

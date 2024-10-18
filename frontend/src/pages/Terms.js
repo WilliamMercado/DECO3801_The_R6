@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import "../styles/Privacy.css"; 
 
 // Terms of Service page
 export default function Terms() {

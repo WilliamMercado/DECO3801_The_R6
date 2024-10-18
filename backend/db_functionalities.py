@@ -2,7 +2,23 @@ from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
 
 from database import *
+import hashlib
+
 bp = Blueprint('db_functionalities', __name__)
+
+def hash_password(password):
+    '''
+    Generates a hashed password.
+
+    Args:
+        password (str): Raw passowrd the user sets
+
+    Returns:
+        str: Hashed password
+    '''
+    password_bytes = password.encode('utf-8')
+    hash_object = hashlib.sha256(password_bytes)
+    return hash_object.hexdigest()
 
 @bp.route('/backend/users/get', methods=['POST'])
 @cross_origin()
@@ -90,7 +106,7 @@ def insert_user():
         try:
             data = request.get_json()
             user_email = data.get('user_email')
-            user_password = data.get('user_password')
+            user_password = hash_password(data.get('user_password'))
 
             # Check if the user already exists
             existing_user = db.session.query(Users).filter_by(user_email = user_email).first()
@@ -123,7 +139,7 @@ def authenticate_user():
         try:
             data = request.get_json()
             user_email = data.get('user_email')
-            user_password = data.get('user_password')
+            user_password = hash_password(data.get('user_password'))
 
             # Find the user by email
             user = db.session.query(Users).filter_by(user_email = user_email).first()

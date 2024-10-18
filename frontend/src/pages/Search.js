@@ -166,6 +166,7 @@ export default function Search() {
                 // Save the search query only if it's not empty
                 if (searchQuery.trim()) {
                     await saveSearchQuery(searchQuery);
+                    setPreviousSearchQueries(prevQueries => [...prevQueries, searchQuery]);
                 }
             } else {
                 console.error('Search failed');
@@ -303,7 +304,12 @@ export default function Search() {
                             onChange={handleInputChange}
                             onFocus={handleSearchFocus}  // Add focus handler
                             onBlur={handleSearchBlur}
-                            value={searchQuery || ''}  // Ensure searchQuery is a string
+                            value={searchQuery || ''} // Ensure searchQuery is a string
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault(); 
+                                }
+                            }}  
                         />
                         {/* Previous search list */}
                         {showSearchHistory && filteredSearchQueries.length > 0 && (
